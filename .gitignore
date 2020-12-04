@@ -4,6 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
+.idea
+.eslintcache
+react-app-env.d.ts
 
 # testing
 /coverage
