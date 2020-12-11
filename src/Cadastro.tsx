@@ -3,8 +3,10 @@ import "./Login.css";
 import {Button, Card, Form, Input, message} from "antd";
 import api from "./Axios";
 import {login} from "./config";
-import {Link} from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router'
+
+
 
 interface value{
     email:string,
@@ -12,33 +14,33 @@ interface value{
 }
 
 const success = (message1:string) => {
-    message.success(message1, 4);
+    message.success(message1, 3);
 };
 
 const error = (message1:string) => {
-    message.error(message1, 4);
+    message.error(message1, 3);
 };
 
-function TelaLogin() {
+function TelaCadastro() {
     const history = useHistory();
 
     const onFinish = (values: value) => {
-        api.post("http://localhost:8686/user/login/",values).then(res =>{
+        api.post("http://localhost:8686/user",values).then(res =>{
             login(res.data.token);
             success("Login efetuado com sucesso!");
-            history.push('/Home');
+            history.push('/');
         })
             .catch(err => {
-            if(err.toString().indexOf("401")>0){
-                error("Senha incorreta!");
-            }
-            if(err.toString().indexOf("404")>0){
-                error("Email não cadastrado!");
-            }
-            if(err.toString().indexOf("500")>0){
-                error("Problema interno da aplicação.Por favor contate o desenvolvedor!");
-            }
-        })
+                if(err.toString().indexOf("406")>0){
+                    error("Email já cadastrado!");
+                }
+                if(err.toString().indexOf("411")>0){
+                    error("Email ou senha não obedece as regras!");
+                }
+                if(err.toString().indexOf("500")>0){
+                    error("Problema interno da aplicação.Por favor contate o desenvolvedor!");
+                }
+            })
     };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
@@ -54,6 +56,13 @@ function TelaLogin() {
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
             >
+                <Form.Item
+                    label="Name"
+                    name="name"
+                >
+                    <Input />
+                </Form.Item>
+
                 <Form.Item
                     label="Email"
                     name="email"
@@ -71,18 +80,18 @@ function TelaLogin() {
                 </Form.Item>
 
                 <Form.Item className="buttons">
-                    <Button type="primary" htmlType="submit">
-                        ENTRAR
-                    </Button>
-                    <Link to='/cadastrar'>
-                        <Button className='cadastrar'>
-                            CADASTRAR-SE
+                    <Link to='/'>
+                        <Button className='voltar'>
+                            VOLTAR
                         </Button>
                     </Link>
+                    <Button className='cadastrar' htmlType="submit">
+                        CADASTRAR-SE
+                    </Button>
                 </Form.Item>
             </Form>
         </Card>
     );
 }
 
-export default TelaLogin;
+export default TelaCadastro;

@@ -1,15 +1,21 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import TelaLogin from './Login';
-
+import TelaCadastro from "./Cadastro";
+import Home from "./Home"
+import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
+import {isAuthenticated} from "./config";
 
 
 function App() {
   return (
       <BrowserRouter>
-        <Switch>
-          <Route path="/Home"><TelaLogin/></Route>
-        </Switch>
+          <Switch>
+              <Route exact path="/" component={TelaLogin}/>
+              <Route path="/cadastrar" component={TelaCadastro}/>
+              <Route path="/Home">
+                  {isAuthenticated() ? <Home/> : <Redirect to='/'/>}
+              </Route>
+          </Switch>
       </BrowserRouter>
   );
 }
