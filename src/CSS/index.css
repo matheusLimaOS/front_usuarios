@@ -1,0 +1,17 @@
+body {
+    background: #7F7FD5;
+    /*background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);*/
+    /*background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);*/
+    background: -webkit-linear-gradient(to right, #FFFFFF,#434343, #000000);
+    background: linear-gradient(to right, #FFFFFF,#434343, #000000);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Playfair Display', serif;
+}
+#root{
+    width: 100%;
+    height: 100%;
+}

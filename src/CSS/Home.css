@@ -1,0 +1,45 @@
+@import '../../node_modules/antd/dist/antd.css';
+.cardolas1{
+    width: 500px;
+    border-radius: 30px;
+}
+.telaHome{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.telaHome .card{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+.cardinho{
+    position: relative;
+}
+.ant-page-header {
+    padding: 0px;
+    left: -5px;
+    top: -10px;
+}
+.btngroup{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.btn{
+    margin: 15px;
+    width: 100%;
+}
+.ant-btn{
+    font-weight: bold;
+}
+.ant-btn:hover{
+    color: white;
+    background: black;
+    border-color: white;
+}
+.ant-btn-lg{
+    width: 100%;
+}

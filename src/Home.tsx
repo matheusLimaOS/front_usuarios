@@ -1,21 +1,51 @@
 import React from 'react';
-import "./Home.css";
-import {Card} from "antd";
-import NavBar from "./NavBar";
+import "./CSS/Home.css";
+import {Button, Card, PageHeader} from "antd";
+import NavBar from "./Components/NavBar";
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router'
 
 function Home() {
+    const history = useHistory();
+
     return (
-        <div>
-            <div>
-                <NavBar/>
+        <div className="telaHome">
+            <NavBar/>
+            <div className="card">
+                <Card className="cardolas1">
+                    <PageHeader
+                        ghost={false}
+                        onBack={() => history.push("/")}
+                        title="Home"
+                        subTitle="Selecione a ação desejada"
+                    />
+                    <hr/>
+                    <div className="btngroup">
+                        <Link to="/inserir" className="btn">
+                            <Button size="large" >
+                                INSERIR
+                            </Button>
+                        </Link>
+                        <Link to="/inserir" className="btn">
+                            <Button size="large" >
+                                VENDA
+                            </Button>
+                        </Link>
+                        <Link to="/inserir" className="btn">
+                            <Button size="large" >
+                                CARRINHO
+                            </Button>
+                        </Link>
+                        <Link to="/inserir" className="btn">
+                            <Button size="large" >
+                                HISTÓRICO DE AÇÕES
+                            </Button>
+                        </Link>
+                    </div>
+                </Card>
             </div>
-            <Card className="cardolas1">
-                <div>
-                    <h1>Seja bem vindo!</h1>
-                </div>
-            </Card>
         </div>
-);
+     );
 }
 
 export default Home;

@@ -1,0 +1,27 @@
+@import '../../node_modules/antd/dist/antd.css';
+.cardolas1{
+    width: fit-content;
+    border-radius: 30px;
+}
+.telaHome{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.telaHome .card{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: 100%;
+}
+.cardinho{
+    position: relative;
+}
+.ant-page-header {
+    padding: 0px;
+    left: -5px;
+    top: -10px;
+}
+input{
+    width: 100%;
+}

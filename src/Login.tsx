@@ -1,6 +1,6 @@
 import React from 'react';
-import "./Login.css";
-import {Button, Card, Form, Input, message} from "antd";
+import "./CSS/Login.css";
+import {Button, Card, Form, Input, message,} from "antd";
 import api from "./Axios";
 import {login} from "./config";
 import {Link} from "react-router-dom";
@@ -14,7 +14,6 @@ interface value{
 const success = (message1:string) => {
     message.success(message1, 4);
 };
-
 const error = (message1:string) => {
     message.error(message1, 4);
 };
@@ -44,44 +43,47 @@ function TelaLogin() {
         console.log('Failed:', errorInfo);
     };
     return (
-        <Card className="cardolas">
-            <div>
-                <h1 className="h11">NargLand</h1>
-            </div>
-            <Form
-                name="basic"
-                initialValues={{ remember: true }}
-                onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
-            >
-                <Form.Item
-                    label="Email"
-                    name="email"
-                    rules={[{ required: true, message: 'Por Favor, insira seu e-mail!' }]}
+        <div className="telaLogin">
+            <Card className="cardolas">
+                <div>
+                    <h1 className="h11">NargLand</h1>
+                </div>
+                <Form
+                    name="basic"
+                    initialValues={{ remember: true }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
                 >
-                    <Input />
-                </Form.Item>
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        rules={[{ required: true, message: 'Por Favor, insira seu e-mail!' }]}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                <Form.Item
-                    label="Password"
-                    name="password"
-                    rules={[{ required: true, message: 'Por Favor, insira sua senha!' }]}
-                >
-                    <Input.Password />
-                </Form.Item>
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        rules={[{ required: true, message: 'Por Favor, insira sua senha!' }]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-                <Form.Item className="buttons">
-                    <Button type="primary" htmlType="submit">
-                        ENTRAR
-                    </Button>
-                    <Link to='/cadastrar'>
-                        <Button className='cadastrar'>
-                            CADASTRAR-SE
+                    <Form.Item className="buttons">
+                        <Button type="primary" htmlType="submit">
+                            ENTRAR
                         </Button>
-                    </Link>
-                </Form.Item>
-            </Form>
-        </Card>
+                        <Link to='/cadastrar'>
+                            <Button className='cadastrar'>
+
+                                CADASTRAR-SE
+                            </Button>
+                        </Link>
+                    </Form.Item>
+                </Form>
+            </Card>
+        </div>
     );
 }
 

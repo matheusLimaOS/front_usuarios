@@ -1,7 +1,0 @@
-@import '~antd/dist/antd.css';
-
-.NavBar{
-    /*display: block;*/
-    background-color: white;
-    height: available;
-}
