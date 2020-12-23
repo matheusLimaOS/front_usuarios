@@ -1,11 +1,12 @@
-import React from 'react';
-import "./CSS/Home.css";
-import {Button, Card, Form, Input, InputNumber, message, PageHeader} from "antd";
+import React, {useState} from 'react';
+import NumberFormat from 'react-number-format';
+import "./CSS/Inserir.css";
+import {Button, Card, Form, Input, message, PageHeader, Space} from "antd";
 import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
-import {Link} from "react-router-dom";
 import api from "./Axios";
 import {login} from "./config";
+import Table from "./Components/Table";
 
 interface value{
     descricao:string,
@@ -22,20 +23,73 @@ const error = (message1:string) => {
 };
 
 function Inserir() {
+    const [Trava,setTrava] = useState(false);
+    const [Desc,setDesc] = useState("");
+    const [Tamanho,setTamanho] = useState(0);
     const history = useHistory();
-
+    const columns = [{
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+    },{
+        title: 'Descrição',
+        dataIndex: 'descricao',
+        key: 'descricao',
+    },{
+        title: 'Tamanho',
+        dataIndex: 'tamanho',
+        key: 'tamanho',
+    },{
+        title: 'Quantidade',
+        dataIndex: 'quantidade',
+        key: 'quantidade'
+    },{
+        title: 'Valor',
+        dataIndex: 'valor',
+        key: 'valor'
+    },{
+        title: 'Ação',
+        key: "action",
+        render: (text: any, record: any) => (
+            <Space>
+                <Button onClick={() => edit(record)} color="dark" >EDITAR</Button>
+            </Space>
+        )
+    }
+    ]
     const onFinish = (values: value) => {
-        api.post("http://localhost:8686/product/",values).then(res =>{
-            login(res.data.token);
-            success("Produto inserido com sucesso!");
-            history.push('/Home');
-        })
-            .catch(err => {
+        values.descricao=Desc;
+        values.tamanho=Tamanho;
+
+        if(!Trava){
+            api.post("http://localhost:8686/product/new",values).then(res =>{
+                login(res.data.token);
+                success("Produto inserido com sucesso!");
+                history.push('/Home');
+            }).catch(err => {
+                error(err.response.data.message);
             })
+        }
+        else{
+            api.post("http://localhost:8686/product/edit",values).then(res =>{
+                login(res.data.token);
+                success("Produto inserido com sucesso!");
+                history.push('/Home');
+            }).catch(err => {
+                error(err.response.data.message);
+            })
+        }
+
+
     };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+    function edit (record:any) {
+        setTrava(true);
+        setDesc(record.descricao);
+        setTamanho(record.tamanho);
+    }
 
     return (
         <div className="telaHome">
@@ -52,56 +106,104 @@ function Inserir() {
                     <div>
                         <Form
                             name="basic"
-                            initialValues={{ remember: true }}
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
                         >
                             <Form.Item
                                 label="Descrição"
                                 name="descricao"
-                                rules={[{ required: true,whitespace: true, message: 'Por Favor, insira a descriçao!' }]}
                             >
-                                <Input />
+                                <p hidden={true}>{Desc}</p>
+                                <Input
+                                    type="text"
+                                    maxLength={15}
+                                    value={Desc}
+                                    readOnly={Trava}
+                                    onChange={(e) => {
+                                        setDesc(e.target.value)
+                                    }}
+                                />
                             </Form.Item>
 
                             <Form.Item
                                 label="Tamanho/Peso"
                                 name="tamanho"
-                                rules={[{ required: true,whitespace: true, message: 'Por Favor, insira o tamanho/peso!'}]}
-
                             >
-                                <Input />
+                                <p hidden={true}>{Tamanho}</p>
+                                <Input
+                                    maxLength={7}
+                                    className="input"
+                                    value={Tamanho}
+                                    readOnly={Trava}
+                                    onChange={(e)=>{
+                                        isNaN(parseInt(e.target.value)) ?
+                                            setTamanho(0):
+                                            setTamanho(parseInt(e.target.value))
+                                    }}
+                                />
                             </Form.Item>
 
                             <Form.Item
                                 label="Quantidade"
                                 name="quantidade"
-                                rules={[{ required: true,whitespace: true, message: 'Por Favor, insira a Quantidade!'}]}
+                                rules={[{
+                                    required:true,
+                                    message:"Campo quantidade é obrigátório!"
+                                }]}
                             >
-                                <Input />
+                                <NumberFormat
+                                    maxLength={10}
+                                    allowLeadingZeros={false}
+                                    decimalScale={0}
+                                    decimalSeparator={","}
+                                    thousandSeparator={"."}
+                                    allowNegative={false}
+                                    displayType="input"
+                                    className="input2"
+                                />
                             </Form.Item>
 
                             <Form.Item
                                 label="Valor"
                                 name="valor"
-                                rules={[{ required: true, message: 'Por Favor, insira o valor!',type: "number"}]}
+                                rules={[{
+                                    required:true,
+                                    message:"Valor obrigatório!"
+                                }]}
                             >
-                                <InputNumber className="input" />
+                                {/*<Input prefix="R$" className="input" />*/}
+                                <NumberFormat
+                                    maxLength={11}
+                                    allowNegative={false}
+                                    decimalScale={1}
+                                    decimalSeparator={","}
+                                    thousandSeparator={"."}
+                                    prefix={'R$: '}
+                                    displayType="input"
+                                    className="input2"
+                                />
                             </Form.Item>
 
                             <Form.Item className="buttons">
-                                <Button type="primary" htmlType="submit">
-                                    ENTRAR
+                                <Button className="inserir" htmlType="submit">
+                                    CADASTRAR
                                 </Button>
-                                <Link to='/cadastrar'>
-                                    <Button className='cadastrar'>
-
-                                        CADASTRAR-SE
-                                    </Button>
-                                </Link>
+                                <Button
+                                    hidden={!Trava}
+                                    className='cancelar'
+                                    onClick={()=>{
+                                        setTrava(false)
+                                        setTamanho(0);
+                                        setDesc("");
+                                    }}
+                                    type='ghost'
+                                >
+                                    CANCELAR
+                                </Button>
                             </Form.Item>
                         </Form>
                     </div>
+                    <Table route="product/" columns={columns}/>
                 </Card>
             </div>
         </div>

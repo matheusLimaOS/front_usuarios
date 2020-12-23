@@ -1,6 +1,6 @@
 @import '../../node_modules/antd/dist/antd.css';
 .cardolas1{
-    width: 500px;
+    width: fit-content;
     border-radius: 30px;
 }
 .telaHome{
@@ -12,7 +12,7 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    height: 100%;
+    margin: 40px;
 }
 .cardinho{
     position: relative;
@@ -42,4 +42,14 @@
 }
 .ant-btn-lg{
     width: 100%;
+}
+.ant-btn:active{
+    color: white;
+    background: black;
+    border-color: black;
+}
+.ant-btn:focus{
+    color: white;
+    background: black;
+    border-color: white;
 }

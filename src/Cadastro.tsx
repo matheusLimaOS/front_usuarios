@@ -28,15 +28,8 @@ function TelaCadastro() {
             history.push('/');
         })
             .catch(err => {
-                if(err.toString().indexOf("406")>0){
-                    error("Email já cadastrado!");
-                }
-                if(err.toString().indexOf("411")>0){
-                    error("Email ou senha não obedece as regras!");
-                }
-                if(err.toString().indexOf("500")>0){
-                    error("Problema interno da aplicação.Por favor contate o desenvolvedor!");
-                }
+                console.log(err.response);
+                error(err.response.data.message);
             })
     };
     const onFinishFailed = (errorInfo: any) => {

@@ -12,7 +12,6 @@
     justify-content: center;
     align-items: center;
     display: flex;
-    height: 100%;
 }
 .cardinho{
     position: relative;
@@ -24,4 +23,51 @@
 }
 input{
     width: 100%;
+}
+.cancelar:hover{
+    color: white;
+    background:#FF4136;
+}
+.cancelar{
+    color: #FF4136;
+    background: white;
+    border: #FF4136 solid 0.05px;
+}
+.inserir:hover{
+    color: white;
+    background: #2ECC40;
+}
+.inserir{
+    margin-right: 20px;
+    color: #2ECC40;
+    background: white;
+    border: #2ECC40 solid 0.05px;
+}
+.inserir:focus{
+    color: white;
+    background: #2ECC40;
+}
+.input2{
+    border: 1px solid #d9d9d9;
+    font-size: 14px;
+    transition:all 0.3s;
+    line-height:1.5715;
+    border-radius: 2px;
+    padding: 4px 11px;
+}
+.input2:hover{
+    border-color: #40a9ff;
+
+}
+.input2:focus{
+    border-color: #40a9ff;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    border-right-width: 1px !important;
+    outline: 0;
+}
+.ant-form-item-has-error .input2{
+    border-color: #ff4d4f;
+}
+.pic{
+    margin-top: 4px;
 }
