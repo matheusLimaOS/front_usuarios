@@ -28,4 +28,13 @@ CREATE TABLE `users` (
   `role` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 )
+CREATE TABLE `aula_node`.`carrinho` (
+  `ID_carrinho` INT NOT NULL AUTO_INCREMENT,
+  `ID_produto` INT NOT NULL,
+  `descricao` VARCHAR(45) NOT NULL,
+  `valorprod` DOUBLE NOT NULL,
+  `quantprod` INT NOT NULL,
+  `usuario` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`ID_carrinho`));
+
 

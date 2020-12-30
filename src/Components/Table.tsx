@@ -4,6 +4,7 @@ import {Table} from "antd";
 import api from "../Axios";
 
 interface Props{
+    size:number,
     columns: Array<object>,
     route:String
 }
@@ -26,12 +27,11 @@ function Tables(props:Props) {
     return (
         <div className="Table">
             <Table
-                key={Data[0].id}
                 dataSource={Data}
                 columns={props.columns}
                 bordered={true}
                 pagination={{
-                    pageSize:5,
+                    pageSize:props.size,
                 }}
             />
         </div>

@@ -26,7 +26,7 @@ function Home() {
                                 INSERIR
                             </Button>
                         </Link>
-                        <Link to="/inserir" className="btn">
+                        <Link to="/Vender" className="btn">
                             <Button size="large" >
                                 VENDA
                             </Button>
@@ -38,7 +38,7 @@ function Home() {
                         </Link>
                         <Link to="/inserir" className="btn">
                             <Button size="large" >
-                                HISTÓRICO DE AÇÕES
+                                HISTÓRICO DE VENDAS
                             </Button>
                         </Link>
                     </div>

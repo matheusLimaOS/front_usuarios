@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import NumberFormat from 'react-number-format';
-import "./CSS/Inserir.css";
+import "./CSS/Venda.css";
 import {Button, Card, Form, Input, message, PageHeader, Space} from "antd";
 import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
@@ -21,10 +21,12 @@ const error = (message1:string) => {
     message.error(message1, 4);
 };
 
-function Inserir() {
+function Venda() {
     const [Trava,setTrava] = useState(false);
+    const [Venda,setVenda] = useState(false);
     const [Desc,setDesc] = useState("");
     const [Tamanho,setTamanho] = useState(0);
+    const [Size,setSize] = useState(15);
     const history = useHistory();
     const columns = [{
         title: 'ID',
@@ -51,16 +53,16 @@ function Inserir() {
         key: "action",
         render: (text: any, record: any) => (
             <Space>
-                <Button onClick={() => edit(record)} color="dark" >EDITAR</Button>
+                <Button onClick={() => edit(record)} color="dark" >VENDER</Button>
+                <Button onClick={() => remove(record)} color="dark" >REMOVER</Button>
             </Space>
         )
     }
     ]
     const onFinish = (values: value) => {
         values.descricao=Desc;
-        values.tamanho=Tamanho;
-
-        if(!Trava){
+        values.tamanho = Tamanho;
+        if(Venda){
             api.post("http://localhost:8686/product/new",values).then(res =>{
                 success("Produto inserido com sucesso!");
                 history.push('/Home');
@@ -69,9 +71,8 @@ function Inserir() {
             })
         }
         else{
-            api.post("http://localhost:8686/product/edit",values).then(res =>{
-                success("Produto inserido com sucesso!");
-                history.push('/Home');
+            api.post("http://localhost:8686/product/remove/",values).then(res =>{
+                success("Produto removido com sucesso!");
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -85,8 +86,18 @@ function Inserir() {
     function edit (record:any) {
         setTrava(true);
         setDesc(record.descricao);
+        setSize(5);
         setTamanho(record.tamanho);
+        setVenda(true);
     }
+    function remove (record:any) {
+        setTrava(true);
+        setDesc(record.descricao);
+        setSize(5);
+        setTamanho(record.tamanho);
+        setVenda(false);
+    }
+
 
     return (
         <div className="telaHome">
@@ -96,12 +107,13 @@ function Inserir() {
                     <PageHeader
                         ghost={false}
                         onBack={() => history.push("/Home")}
-                        title="Inserir"
-                        subTitle="Insira o produto desejado!"
+                        title="Venda"
+                        subTitle="Venda o produto desejado!"
                     />
                     <hr/>
                     <div>
                         <Form
+                            hidden={!Trava}
                             name="basic"
                             onFinish={onFinish}
                             onFinishFailed={onFinishFailed}
@@ -116,12 +128,8 @@ function Inserir() {
                                     maxLength={25}
                                     value={Desc}
                                     readOnly={Trava}
-                                    onChange={(e) => {
-                                        setDesc(e.target.value)
-                                    }}
                                 />
                             </Form.Item>
-
                             <Form.Item
                                 label="Tamanho/Peso"
                                 name="tamanho"
@@ -132,14 +140,8 @@ function Inserir() {
                                     className="input"
                                     value={Tamanho}
                                     readOnly={Trava}
-                                    onChange={(e)=>{
-                                        isNaN(parseInt(e.target.value)) ?
-                                            setTamanho(0):
-                                            setTamanho(parseInt(e.target.value))
-                                    }}
                                 />
                             </Form.Item>
-
                             <Form.Item
                                 label="Quantidade"
                                 name="quantidade"
@@ -149,6 +151,7 @@ function Inserir() {
                                 }]}
                             >
                                 <NumberFormat
+                                    hidden={!Trava}
                                     maxLength={7}
                                     allowLeadingZeros={false}
                                     decimalScale={0}
@@ -169,6 +172,7 @@ function Inserir() {
                                 }]}
                             >
                                 <NumberFormat
+                                    hidden={!Trava}
                                     maxLength={12}
                                     allowNegative={false}
                                     decimalSeparator={","}
@@ -180,16 +184,15 @@ function Inserir() {
                             </Form.Item>
 
                             <Form.Item className="buttons">
-                                <Button className="inserir" htmlType="submit">
-                                    {!Trava ? 'CADASTRAR' : 'EDITAR'}
+                                <Button className="inserir" htmlType="submit" hidden={!Trava}>
+                                    VENDER
                                 </Button>
                                 <Button
                                     hidden={!Trava}
                                     className='cancelar'
                                     onClick={()=>{
                                         setTrava(false)
-                                        setTamanho(0);
-                                        setDesc("");
+                                        setSize(15);
                                     }}
                                     type='ghost'
                                 >
@@ -198,11 +201,11 @@ function Inserir() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table size={5} route="product/" columns={columns}/>
+                    <Table route="product/" size={Size} columns={columns}/>
                 </Card>
             </div>
         </div>
     );
 }
 
-export default Inserir;
+export default Venda;

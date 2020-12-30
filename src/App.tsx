@@ -5,6 +5,7 @@ import Home from "./Home"
 import {BrowserRouter, Switch, Route, Redirect} from "react-router-dom";
 import {isAuthenticated} from "./config";
 import Inserir from "./inserir";
+import Venda from "./Venda";
 
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
               </Route>
               <Route path="/inserir">
                   {isAuthenticated() ? <Inserir/> : <Redirect to='/'/>}
+              </Route>
+              <Route path="/Venda">
+                  {isAuthenticated() ? <Venda/> : <Redirect to='/'/>}
               </Route>
           </Switch>
       </BrowserRouter>
