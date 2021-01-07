@@ -6,7 +6,8 @@ import api from "../Axios";
 interface Props{
     size:number,
     columns: Array<object>,
-    route:String
+    route:String,
+    atu: boolean
 }
 
 function Tables(props:Props) {
@@ -22,11 +23,12 @@ function Tables(props:Props) {
         api.get("http://localhost:8686/"+props.route).then(res =>{
             setData(res.data);
         })
-    },[props.route]);
+    },[props.route,props.atu]);
 
     return (
         <div className="Table">
             <Table
+                size='large'
                 dataSource={Data}
                 columns={props.columns}
                 bordered={true}

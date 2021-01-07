@@ -4,7 +4,7 @@ import {Button, Card, Form, Input, message,} from "antd";
 import api from "./Axios";
 import {login} from "./config";
 import {Link} from "react-router-dom";
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 
 interface value{
     email:string,
@@ -21,11 +21,14 @@ const error = (message1:string) => {
 function TelaLogin() {
     const history = useHistory();
 
+    console.log(false);
+
     const onFinish = (values: value) => {
         api.post("http://localhost:8686/user/login/",values).then(res =>{
             login(res.data.token);
             success("Login efetuado com sucesso!");
-            history.push('/Home');
+            console.log(true);
+            history.push("/Home");
         })
             .catch(err => {
             if(err.toString().indexOf("401")>0){
@@ -67,7 +70,7 @@ function TelaLogin() {
                         name="password"
                         rules={[{ required: true, message: 'Por Favor, insira sua senha!' }]}
                     >
-                        <Input.Password />
+                        <Input.Password/>
                     </Form.Item>
 
                     <Form.Item className="buttons">
@@ -76,7 +79,6 @@ function TelaLogin() {
                         </Button>
                         <Link to='/cadastrar'>
                             <Button className='cadastrar'>
-
                                 CADASTRAR-SE
                             </Button>
                         </Link>

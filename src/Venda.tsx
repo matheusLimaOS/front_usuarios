@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import NumberFormat from 'react-number-format';
 import "./CSS/Venda.css";
-import {Button, Card, Form, Input, message, PageHeader, Space} from "antd";
+import {Button, Card, Form, Input, message, PageHeader, Popconfirm, Space} from "antd";
 import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
@@ -23,9 +23,13 @@ const error = (message1:string) => {
 
 function Venda() {
     const [Trava,setTrava] = useState(false);
+    const [Trava1,setTrava1] = useState(false);
     const [Venda,setVenda] = useState(false);
     const [Desc,setDesc] = useState("");
     const [Tamanho,setTamanho] = useState(0);
+    const [Quantidade,setQuantidade] = useState(0);
+    const [Valor,setValor] = useState(0.0);
+    const [Atu,setAtu] = useState(true);
     const [Size,setSize] = useState(15);
     const history = useHistory();
     const columns = [{
@@ -59,13 +63,16 @@ function Venda() {
         )
     }
     ]
+
     const onFinish = (values: value) => {
         values.descricao=Desc;
         values.tamanho = Tamanho;
+        values.quantidade = Quantidade;
         if(Venda){
             api.post("http://localhost:8686/product/new",values).then(res =>{
                 success("Produto inserido com sucesso!");
-                history.push('/Home');
+                setAtu(!Atu);
+                console.log(Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -73,6 +80,7 @@ function Venda() {
         else{
             api.post("http://localhost:8686/product/remove/",values).then(res =>{
                 success("Produto removido com sucesso!");
+                setAtu(!Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -85,6 +93,7 @@ function Venda() {
     };
     function edit (record:any) {
         setTrava(true);
+        setTrava1(false);
         setDesc(record.descricao);
         setSize(5);
         setTamanho(record.tamanho);
@@ -92,12 +101,12 @@ function Venda() {
     }
     function remove (record:any) {
         setTrava(true);
+        setTrava1(true);
         setDesc(record.descricao);
         setSize(5);
         setTamanho(record.tamanho);
         setVenda(false);
     }
-
 
     return (
         <div className="telaHome">
@@ -113,6 +122,7 @@ function Venda() {
                     <hr/>
                     <div>
                         <Form
+                            id='Form'
                             hidden={!Trava}
                             name="basic"
                             onFinish={onFinish}
@@ -151,10 +161,12 @@ function Venda() {
                                 }]}
                             >
                                 <NumberFormat
+                                    onChange={(e) => setQuantidade(parseInt(e.target.value))}
                                     hidden={!Trava}
                                     maxLength={7}
                                     allowLeadingZeros={false}
                                     decimalScale={0}
+                                    value={Quantidade}
                                     decimalSeparator={","}
                                     thousandSeparator={"."}
                                     allowNegative={false}
@@ -166,13 +178,16 @@ function Venda() {
                             <Form.Item
                                 label="Valor"
                                 name="valor"
+                                hidden={Trava1}
                                 rules={[{
-                                    required:true,
+                                    required:!Trava1,
                                     message:"Valor obrigatório!"
                                 }]}
                             >
                                 <NumberFormat
-                                    hidden={!Trava}
+                                    onChange={(e)=> setValor(parseFloat(e.target.value))}
+                                    value={Valor}
+                                    hidden={Trava1}
                                     maxLength={12}
                                     allowNegative={false}
                                     decimalSeparator={","}
@@ -184,15 +199,25 @@ function Venda() {
                             </Form.Item>
 
                             <Form.Item className="buttons">
-                                <Button className="inserir" htmlType="submit" hidden={!Trava}>
-                                    VENDER
-                                </Button>
+                                <Popconfirm
+                                    title={`Realmente deseja remover ${Quantidade} unidade(s) do produto: ${Desc}`}
+                                    disabled={!Trava1}
+                                    okText="SIM"
+                                    cancelText="NÃO"
+                                    onConfirm={() => onFinish({descricao:Desc,tamanho:Tamanho,quantidade:Quantidade,valor:0.0})}
+                                >
+                                    <Button className="inserir" htmlType="submit" hidden={!Trava}>
+                                        {Trava1 ? 'REMOVER' : 'VENDER'}
+                                    </Button>
+                                </Popconfirm>
                                 <Button
                                     hidden={!Trava}
                                     className='cancelar'
                                     onClick={()=>{
+                                        setTrava1(false)
                                         setTrava(false)
                                         setSize(15);
+                                        setQuantidade(0);
                                     }}
                                     type='ghost'
                                 >
@@ -201,7 +226,7 @@ function Venda() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table route="product/" size={Size} columns={columns}/>
+                    <Table route="product/" atu={Atu} size={Size} columns={columns}/>
                 </Card>
             </div>
         </div>

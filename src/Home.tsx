@@ -26,7 +26,7 @@ function Home() {
                                 INSERIR
                             </Button>
                         </Link>
-                        <Link to="/Vender" className="btn">
+                        <Link to="/Venda" className="btn">
                             <Button size="large" >
                                 VENDA
                             </Button>

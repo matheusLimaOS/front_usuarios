@@ -51,7 +51,7 @@ function Inserir() {
         key: "action",
         render: (text: any, record: any) => (
             <Space>
-                <Button onClick={() => edit(record)} color="dark" >EDITAR</Button>
+                <Button onClick={() => edit(record)} color="dark" >ADICIONAR</Button>
             </Space>
         )
     }
@@ -63,14 +63,14 @@ function Inserir() {
         if(!Trava){
             api.post("http://localhost:8686/product/new",values).then(res =>{
                 success("Produto inserido com sucesso!");
-                history.push('/Home');
+                history.push("/Home");
             }).catch(err => {
                 error(err.response.data.message);
             })
         }
         else{
             api.post("http://localhost:8686/product/edit",values).then(res =>{
-                success("Produto inserido com sucesso!");
+                success("Produto editado com sucesso!");
                 history.push('/Home');
             }).catch(err => {
                 error(err.response.data.message);
@@ -116,6 +116,7 @@ function Inserir() {
                                     maxLength={25}
                                     value={Desc}
                                     readOnly={Trava}
+                                    disabled={Trava}
                                     onChange={(e) => {
                                         setDesc(e.target.value)
                                     }}
@@ -131,6 +132,7 @@ function Inserir() {
                                     maxLength={7}
                                     className="input"
                                     value={Tamanho}
+                                    disabled={Trava}
                                     readOnly={Trava}
                                     onChange={(e)=>{
                                         isNaN(parseInt(e.target.value)) ?
@@ -181,7 +183,7 @@ function Inserir() {
 
                             <Form.Item className="buttons">
                                 <Button className="inserir" htmlType="submit">
-                                    {!Trava ? 'CADASTRAR' : 'EDITAR'}
+                                    {!Trava ? 'CADASTRAR' : 'ADICIONAR'}
                                 </Button>
                                 <Button
                                     hidden={!Trava}
@@ -198,7 +200,7 @@ function Inserir() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table size={5} route="product/" columns={columns}/>
+                    <Table size={5} atu={false} route="product/" columns={columns}/>
                 </Card>
             </div>
         </div>

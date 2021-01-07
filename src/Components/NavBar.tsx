@@ -2,9 +2,14 @@ import React from 'react';
 import "../CSS/NavBar.css";
 import { Link } from "react-router-dom"
 import { ShoppingCartOutlined,ShopOutlined,ShoppingOutlined,LogoutOutlined } from "@ant-design/icons";
-import {logout} from "../config";
+import {isAuthenticated, logout} from "../config";
+import {useHistory} from "react-router";
 
 function NavBar() {
+    const history = useHistory();
+    // if(!isAuthenticated()){
+    //     history.push('/');
+    // }
     return (
        <div className="NavBar">
            <Link className="narg" to="/Home">
