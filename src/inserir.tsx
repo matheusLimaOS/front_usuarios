@@ -6,6 +6,7 @@ import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
 import Table from "./Components/Table";
+import {Authenticate} from "./config";
 
 interface value{
     descricao:string,
@@ -87,6 +88,8 @@ function Inserir() {
         setDesc(record.descricao);
         setTamanho(record.tamanho);
     }
+
+    Authenticate();
 
     return (
         <div className="telaHome">

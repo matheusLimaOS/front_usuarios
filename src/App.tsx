@@ -13,19 +13,19 @@ function App() {
       <BrowserRouter>
           <Switch>
               <Route exact path="/">
-                  {isAuthenticated() ? <Redirect to='/Home'/> : <TelaLogin/> }
+                  <TelaLogin/>
               </Route>
               <Route path="/cadastrar">
-                  {isAuthenticated() ? <Redirect to='/Home'/> : <TelaCadastro/>}
+                  <TelaCadastro/>
               </Route>
               <Route path="/Home">
-                  {isAuthenticated() ? <Home/> : <Redirect to='/'/>}
+                  <Home/>
               </Route>
               <Route path="/inserir">
-                  {isAuthenticated() ? <Inserir/> : <Redirect to='/'/>}
+                  <Inserir/>
               </Route>
               <Route path="/Venda">
-                  {isAuthenticated() ? <Venda/> : <Redirect to='/'/>}
+                  <Venda/>
               </Route>
           </Switch>
       </BrowserRouter>

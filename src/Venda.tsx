@@ -6,6 +6,7 @@ import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
 import Table from "./Components/Table";
+import {Authenticate} from "./config";
 
 interface value{
     descricao:string,
@@ -72,7 +73,6 @@ function Venda() {
             api.post("http://localhost:8686/product/new",values).then(res =>{
                 success("Produto inserido com sucesso!");
                 setAtu(!Atu);
-                console.log(Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -107,6 +107,8 @@ function Venda() {
         setTamanho(record.tamanho);
         setVenda(false);
     }
+
+    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">
@@ -206,10 +208,13 @@ function Venda() {
                                     cancelText="NÃO"
                                     onConfirm={() => onFinish({descricao:Desc,tamanho:Tamanho,quantidade:Quantidade,valor:0.0})}
                                 >
-                                    <Button className="inserir" htmlType="submit" hidden={!Trava}>
-                                        {Trava1 ? 'REMOVER' : 'VENDER'}
+                                    <Button className="inserir" htmlType="submit" hidden={!Trava1}>
+                                        REMOVER
                                     </Button>
                                 </Popconfirm>
+                                <Button className="inserir" htmlType="submit" hidden={Trava1}>
+                                    VENDER
+                                </Button>
                                 <Button
                                     hidden={!Trava}
                                     className='cancelar'

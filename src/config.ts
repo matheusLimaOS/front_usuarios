@@ -1,13 +1,16 @@
+import { useHistory } from 'react-router'
+
 export const TOKEN_KEY = '@teste-Token';
-export const isAuthenticated = () => {
+export const isAuthenticated = async () => {
     let token = localStorage.getItem(TOKEN_KEY);
     let time = localStorage.getItem('time') || '0';
 
-    console.log(token);
-
-    if(((Date.now()/1000)/60) > ((parseInt(time)/1000)/60)+1){
-        logout();
+    if(((Date.now()/1000)/60) > ((parseInt(time)/1000)/60)+5){
+        await logout();
         return false;
+    }
+    else{
+        localStorage.setItem('time',Date.now().toString());
     }
 
     if(token!==null && token!== undefined){
@@ -15,21 +18,24 @@ export const isAuthenticated = () => {
 
     }
     else{
-        logout();
+        await logout();
         return false;
     }
 
 }
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const login = (token: string) => {
-    localStorage.setItem(TOKEN_KEY, token);
-    localStorage.setItem('time',Date.now().toString());
+export const login = async (token: string) => {
+    await localStorage.setItem(TOKEN_KEY, token);
+    await localStorage.setItem('time',Date.now().toString());
 };
-export const logout = () => {
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem('time');
+export const logout = async () => {
+    await localStorage.removeItem(TOKEN_KEY);
+    await localStorage.removeItem('time');
 };
 
-export const timeout = () => {
-
+export const Authenticate = async () => {
+    const history = useHistory();
+    if (!await isAuthenticated()){
+        history.push('/');
+    }
 }

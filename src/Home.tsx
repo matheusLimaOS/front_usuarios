@@ -4,9 +4,12 @@ import {Button, Card, PageHeader} from "antd";
 import NavBar from "./Components/NavBar";
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router'
+import {Authenticate} from "./config";
 
 function Home() {
     const history = useHistory();
+
+    Authenticate();
 
     return (
         <div className="telaHome">

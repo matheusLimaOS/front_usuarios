@@ -3,7 +3,7 @@ import "./CSS/Login.css";
 import {Button, Card, Form, Input, message,} from "antd";
 import api from "./Axios";
 import {login} from "./config";
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 import { useHistory } from 'react-router-dom'
 
 interface value{
@@ -21,25 +21,14 @@ const error = (message1:string) => {
 function TelaLogin() {
     const history = useHistory();
 
-    console.log(false);
-
     const onFinish = (values: value) => {
-        api.post("http://localhost:8686/user/login/",values).then(res =>{
-            login(res.data.token);
+        api.post("http://localhost:8686/user/login/",values).then(async res =>{
+            await login(res.data.token);
             success("Login efetuado com sucesso!");
-            console.log(true);
             history.push("/Home");
         })
             .catch(err => {
-            if(err.toString().indexOf("401")>0){
-                error("Senha incorreta!");
-            }
-            if(err.toString().indexOf("404")>0){
-                error("Email não cadastrado!");
-            }
-            if(err.toString().indexOf("500")>0){
-                error("Problema interno da aplicação.Por favor contate o desenvolvedor!");
-            }
+                error(err.response.data.message);
         })
     };
     const onFinishFailed = (errorInfo: any) => {
