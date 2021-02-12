@@ -3,7 +3,7 @@ import "./CSS/Login.css";
 import {Button, Card, Form, Input, message,} from "antd";
 import api from "./Axios";
 import {login} from "./config";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import { useHistory } from 'react-router-dom'
 
 interface value{

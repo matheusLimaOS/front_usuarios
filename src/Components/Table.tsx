@@ -7,7 +7,7 @@ interface Props{
     size:number,
     columns: Array<object>,
     route:String,
-    atu: boolean
+    atu?: boolean
 }
 
 function Tables(props:Props) {

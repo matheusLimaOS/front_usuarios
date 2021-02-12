@@ -29,7 +29,6 @@ function Venda() {
     const [Desc,setDesc] = useState("");
     const [Tamanho,setTamanho] = useState(0);
     const [Quantidade,setQuantidade] = useState(0);
-    const [Valor,setValor] = useState(0.0);
     const [Atu,setAtu] = useState(true);
     const [Size,setSize] = useState(15);
     const history = useHistory();
@@ -66,19 +65,21 @@ function Venda() {
     ]
 
     const onFinish = (values: value) => {
-        values.descricao=Desc;
+        values.descricao = Desc;
         values.tamanho = Tamanho;
         values.quantidade = Quantidade;
+
+        console.log(values);
         if(Venda){
-            api.post("http://localhost:8686/product/new",values).then(res =>{
-                success("Produto inserido com sucesso!");
+            api.post("http://localhost:8686/cart/addcart",values).then(() =>{
+                success("Produto colocado no carrinho!");
                 setAtu(!Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
         }
         else{
-            api.post("http://localhost:8686/product/remove/",values).then(res =>{
+            api.post("http://localhost:8686/product/remove/",values).then(() =>{
                 success("Produto removido com sucesso!");
                 setAtu(!Atu);
             }).catch(err => {
@@ -187,9 +188,6 @@ function Venda() {
                                 }]}
                             >
                                 <NumberFormat
-                                    onChange={(e)=> setValor(parseFloat(e.target.value))}
-                                    value={Valor}
-                                    hidden={Trava1}
                                     maxLength={12}
                                     allowNegative={false}
                                     decimalSeparator={","}

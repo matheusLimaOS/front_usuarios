@@ -61,6 +61,8 @@ function Inserir() {
         values.descricao=Desc;
         values.tamanho=Tamanho;
 
+        console.log(values);
+
         if(!Trava){
             api.post("http://localhost:8686/product/new",values).then(res =>{
                 success("Produto inserido com sucesso!");

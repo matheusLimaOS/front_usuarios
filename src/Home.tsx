@@ -3,12 +3,9 @@ import "./CSS/Home.css";
 import {Button, Card, PageHeader} from "antd";
 import NavBar from "./Components/NavBar";
 import { Link } from 'react-router-dom';
-import { useHistory } from 'react-router'
 import {Authenticate} from "./config";
 
 function Home() {
-    const history = useHistory();
-
     Authenticate();
 
     return (
@@ -18,7 +15,6 @@ function Home() {
                 <Card className="cardolas1">
                     <PageHeader
                         ghost={false}
-                        onBack={() => history.push("/")}
                         title="Home"
                         subTitle="Selecione a ação desejada"
                     />

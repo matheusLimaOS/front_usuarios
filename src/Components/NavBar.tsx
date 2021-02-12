@@ -18,7 +18,7 @@ function NavBar() {
                <ShoppingOutlined />
                Venda
            </Link>
-           <Link className="ins" to="/">
+           <Link className="ins" to="/carrinho">
                <ShoppingCartOutlined/>
                Carrinho
            </Link>

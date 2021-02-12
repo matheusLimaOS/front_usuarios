@@ -1,4 +1,9 @@
 import { useHistory } from 'react-router'
+import {message} from "antd";
+
+const error = (message1:string) => {
+    message.error(message1, 4);
+};
 
 export const TOKEN_KEY = '@teste-Token';
 export const isAuthenticated = async () => {
@@ -7,6 +12,7 @@ export const isAuthenticated = async () => {
 
     if(((Date.now()/1000)/60) > ((parseInt(time)/1000)/60)+5){
         await logout();
+        error("Tempo limite sem movimentação excedido,Por favor fazer o login novamente");
         return false;
     }
     else{
@@ -32,7 +38,6 @@ export const logout = async () => {
     await localStorage.removeItem(TOKEN_KEY);
     await localStorage.removeItem('time');
 };
-
 export const Authenticate = async () => {
     const history = useHistory();
     if (!await isAuthenticated()){
