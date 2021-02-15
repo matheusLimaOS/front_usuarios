@@ -69,7 +69,6 @@ function Venda() {
         values.tamanho = Tamanho;
         values.quantidade = Quantidade;
 
-        console.log(values);
         if(Venda){
             api.post("http://localhost:8686/cart/addcart",values).then(() =>{
                 success("Produto colocado no carrinho!");

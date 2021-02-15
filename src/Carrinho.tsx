@@ -1,11 +1,19 @@
 import NavBar from "./Components/NavBar";
-import {Button, Card,PageHeader, Space} from "antd";
+import {Button, Card, message, PageHeader, Popconfirm, Space} from "antd";
 import Table from "./Components/Table";
-import React from "react";
+import React, {useState} from "react";
 import {useHistory} from "react-router";
 import NumberFormat from "react-number-format";
 import "./CSS/Carrinho.css";
+import api from "./Axios";
+import { Link } from "react-router-dom"
 
+const success = (message1:string) => {
+    message.success(message1, 4);
+};
+const error = (message1:string) => {
+    message.error(message1, 4);
+};
 
 export default function Carrinho (){
     const history = useHistory();
@@ -34,7 +42,6 @@ export default function Carrinho (){
         key: "valorsomado",
         render: (text: any, record: any) => (
             <Space>
-                {console.log(record)}
                 <NumberFormat
                     disabled={true}
                     maxLength={12}
@@ -54,6 +61,24 @@ export default function Carrinho (){
         key: 'usuario'
     }
     ]
+    let [Atu,setAtu] = useState(true);
+
+    function clearCart() {
+        api.delete(`http://localhost:8686/cart/clearCart/matholaslima4472@gmail.com`).then(res =>{
+            setAtu(!Atu);
+            success(res.data);
+        }).catch(err => {
+            error(err.response.data.message);
+        })
+    }
+    function finishCart() {
+        api.post(`http://localhost:8686/cart/finishCart/matholaslima4472@gmail.com`).then(res =>{
+            setAtu(!Atu);
+            success(res.data);
+        }).catch(err => {
+            error(err.response.data.message);
+        })
+    }
 
     return (
         <div className="telaHome">
@@ -67,13 +92,39 @@ export default function Carrinho (){
                         subTitle="Produtos colocados no carrinho!"
                     />
                     <hr/>
-                    <div className="buttons" hidden={true}>
-                        <Button className="btn-cart finishsell">FINALIZAR VENDA</Button>
-                        <Button className="btn-cart continuesell">CONTINUAR VENDENDO</Button>
-                        <Button className="btn-cart cleancart">LIMPAR CARRINHO</Button>
+                    <div className="buttons">
+                        <Popconfirm
+                            title={`Realmente deseja finalizar a venda?`}
+                            okText="SIM"
+                            cancelText="NÃO"
+                            onConfirm={() => {
+                                finishCart()
+                            }}
+                        >
+                            <Button className="btn-cart">
+                                FINALIZAR VENDA
+                            </Button>
+                        </Popconfirm>
+                        <Link to={"/Venda"}>
+                            <Button className="btn-cart">
+                                CONTINUAR VENDENDO
+                            </Button>
+                        </Link>
+                        <Popconfirm
+                            title={`Realmente deseja limpar o carrinho?`}
+                            okText="SIM"
+                            cancelText="NÃO"
+                            onConfirm={() => {
+                                clearCart()
+                            }}
+                        >
+                            <Button className="btn-cart">
+                                LIMPAR CARRINHO
+                            </Button>
+                        </Popconfirm>
                     </div>
                     <hr/>
-                    <Table route={"cart/matholaslima4472@gmail.com"} size={10} columns={columns}/>
+                    <Table route={"cart/matholaslima4472@gmail.com"} atu={Atu} size={10} columns={columns}/>
                 </Card>
             </div>
         </div>

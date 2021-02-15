@@ -35,7 +35,7 @@ function Home() {
                                 CARRINHO
                             </Button>
                         </Link>
-                        <Link to="/inserir" className="btn">
+                        <Link to="/HistVendas" className="btn">
                             <Button size="large" >
                                 HISTÓRICO DE VENDAS
                             </Button>

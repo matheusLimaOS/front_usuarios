@@ -1,31 +1,7 @@
 .buttons{
-    margin: 10px 20px;
+    margin: 15px 20px;
 }
 .btn-cart{
-    margin: 0 60px;
-}
-.finishsell{
-    background: #3cca3c;
-    color: white;
-}
-.finishsell:hover{
-    background: green;
-    color: white;
-}
-.continuesell{
-    background: #5b5bff;
-    color: white;
-}
-.continuesell:hover{
-    background: blue;
-    color: white;
-}
-.cleancart{
-    background: #ff4d4d;
-    color: white;
-}
-.cleancart:hover{
-    background: #ff0000;
-    color: white;
+    margin: 0 2.5em;
 }
 

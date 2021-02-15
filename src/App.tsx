@@ -6,6 +6,8 @@ import {BrowserRouter, Switch, Route} from "react-router-dom";
 import Inserir from "./inserir";
 import Venda from "./Venda";
 import Carrinho from "./Carrinho";
+import HistoricoVendas from "./HistoricoVendas";
+import DetalheVenda from "./DetalheVenda";
 
 function App() {
   return (
@@ -28,6 +30,12 @@ function App() {
               </Route>
               <Route path="/Venda">
                   <Venda/>
+              </Route>
+              <Route exact path="/HistVendas">
+                  <HistoricoVendas/>
+              </Route>
+              <Route path="/HistVendas/venda/:id">
+                  <DetalheVenda/>
               </Route>
           </Switch>
       </BrowserRouter>
