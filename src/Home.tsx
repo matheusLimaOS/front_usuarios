@@ -30,7 +30,7 @@ function Home() {
                                 VENDA
                             </Button>
                         </Link>
-                        <Link to="/inserir" className="btn">
+                        <Link to="/carrinho" className="btn">
                             <Button size="large" >
                                 CARRINHO
                             </Button>

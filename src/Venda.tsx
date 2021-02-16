@@ -6,7 +6,7 @@ import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
 import Table from "./Components/Table";
-import {Authenticate} from "./config";
+import {Authenticate, getUsuario} from "./config";
 
 interface value{
     descricao:string,
@@ -29,8 +29,7 @@ function Venda() {
     const [Desc,setDesc] = useState("");
     const [Tamanho,setTamanho] = useState(0);
     const [Quantidade,setQuantidade] = useState(0);
-    const [Atu,setAtu] = useState(true);
-    const [Size,setSize] = useState(15);
+    const [Size,setSize] = useState(5);
     const history = useHistory();
     const columns = [{
         title: 'ID',
@@ -70,9 +69,8 @@ function Venda() {
         values.quantidade = Quantidade;
 
         if(Venda){
-            api.post("http://localhost:8686/cart/addcart",values).then(() =>{
+            api.post("http://localhost:8686/cart/addcart/"+getUsuario(),values).then(() =>{
                 success("Produto colocado no carrinho!");
-                setAtu(!Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -80,7 +78,6 @@ function Venda() {
         else{
             api.post("http://localhost:8686/product/remove/",values).then(() =>{
                 success("Produto removido com sucesso!");
-                setAtu(!Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -95,7 +92,7 @@ function Venda() {
         setTrava(true);
         setTrava1(false);
         setDesc(record.descricao);
-        setSize(5);
+        setSize(1);
         setTamanho(record.tamanho);
         setVenda(true);
     }
@@ -103,7 +100,7 @@ function Venda() {
         setTrava(true);
         setTrava1(true);
         setDesc(record.descricao);
-        setSize(5);
+        setSize(3);
         setTamanho(record.tamanho);
         setVenda(false);
     }
@@ -218,7 +215,7 @@ function Venda() {
                                     onClick={()=>{
                                         setTrava1(false)
                                         setTrava(false)
-                                        setSize(15);
+                                        setSize(5);
                                         setQuantidade(0);
                                     }}
                                     type='ghost'
@@ -228,7 +225,7 @@ function Venda() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table route="product/" atu={Atu} size={Size} columns={columns}/>
+                    <Table route="product/" size={Size} columns={columns}/>
                 </Card>
             </div>
         </div>

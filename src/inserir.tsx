@@ -205,7 +205,7 @@ function Inserir() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table size={5} atu={false} route="product/" columns={columns}/>
+                    <Table size={2} atu={false} route="product/" columns={columns}/>
                 </Card>
             </div>
         </div>

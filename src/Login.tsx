@@ -2,7 +2,7 @@ import React from 'react';
 import "./CSS/Login.css";
 import {Button, Card, Form, Input, message,} from "antd";
 import api from "./Axios";
-import {login} from "./config";
+import {getUsuario, login, setUsuario} from "./config";
 import {Link} from "react-router-dom";
 import { useHistory } from 'react-router-dom'
 
@@ -23,6 +23,7 @@ function TelaLogin() {
 
     const onFinish = (values: value) => {
         api.post("http://localhost:8686/user/login/",values).then(async res =>{
+            setUsuario(res.data.id_user);
             await login(res.data.token);
             success("Login efetuado com sucesso!");
             history.push("/Home");

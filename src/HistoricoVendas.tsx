@@ -4,7 +4,7 @@ import Table from "./Components/Table";
 import React from "react";
 import {useHistory} from "react-router";
 import "./CSS/Carrinho.css";
-import {Link} from "react-router-dom";
+import {Authenticate} from "./config";
 
 export default function HistoricoVendas (){
     const history = useHistory();
@@ -60,7 +60,7 @@ export default function HistoricoVendas (){
         }
     }
 
-
+    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">
@@ -73,7 +73,7 @@ export default function HistoricoVendas (){
                         title="Histórico de Vendas"
                         subTitle="Vendas Realizadas"
                     />
-                    <Table route={"sells"} size={10} columns={columns}/>
+                    <Table route={"sells"} size={5} columns={columns}/>
                 </Card>
             </div>
         </div>

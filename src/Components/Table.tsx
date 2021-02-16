@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import "../CSS/NavBar.css";
+import "../CSS/Table.css";
 import {Table} from "antd";
 import api from "../Axios";
 

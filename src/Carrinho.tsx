@@ -7,6 +7,7 @@ import NumberFormat from "react-number-format";
 import "./CSS/Carrinho.css";
 import api from "./Axios";
 import { Link } from "react-router-dom"
+import {Authenticate, getUsuario} from "./config";
 
 const success = (message1:string) => {
     message.success(message1, 4);
@@ -36,7 +37,7 @@ export default function Carrinho (){
     },{
         title: 'Quantidade',
         dataIndex: 'quantprod',
-        key: 'quantprod',
+        key: 'quantprod'
     },{
         title: 'Valor Final',
         key: "valorsomado",
@@ -59,26 +60,56 @@ export default function Carrinho (){
         title: 'Usuario',
         dataIndex: 'usuario',
         key: 'usuario'
+    },{
+        title: 'Ação',
+        key: 'action',
+        render: (text: any, record: any) => (
+            <Space>
+                <Popconfirm
+                    title={`Realmente deseja remover este produto do carrinho?`}
+                    okText="SIM"
+                    cancelText="NÃO"
+                    onConfirm={() => {
+                        removeCart(record.ID_carrinho)
+                    }}
+                >
+                    <Button>
+                        REMOVER
+                    </Button>
+                </Popconfirm>
+
+            </Space>
+        )
     }
     ]
     let [Atu,setAtu] = useState(true);
 
-    function clearCart() {
-        api.delete(`http://localhost:8686/cart/clearCart/matholaslima4472@gmail.com`).then(res =>{
+    function removeCart(id:number) {
+        api.delete("http://localhost:8686/cart/remove/"+id).then(res=>{
+            success(res.data.message);
             setAtu(!Atu);
-            success(res.data);
+        }).catch(err =>{
+            error(err.response.data.message);
+        })
+    }
+    function clearCart() {
+        api.delete(`http://localhost:8686/cart/clearCart/`+ getUsuario()).then(res =>{
+            setAtu(!Atu);
+            success(res.data.message);
         }).catch(err => {
             error(err.response.data.message);
         })
     }
     function finishCart() {
-        api.post(`http://localhost:8686/cart/finishCart/matholaslima4472@gmail.com`).then(res =>{
+        api.post(`http://localhost:8686/cart/finishCart/` + getUsuario()).then(res =>{
             setAtu(!Atu);
             success(res.data);
         }).catch(err => {
             error(err.response.data.message);
         })
     }
+
+    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">
@@ -124,7 +155,7 @@ export default function Carrinho (){
                         </Popconfirm>
                     </div>
                     <hr/>
-                    <Table route={"cart/matholaslima4472@gmail.com"} atu={Atu} size={10} columns={columns}/>
+                    <Table route={"cart/"+getUsuario()} atu={Atu} size={10} columns={columns}/>
                 </Card>
             </div>
         </div>

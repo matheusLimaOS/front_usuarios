@@ -1,3 +1,6 @@
 .table{
     overflow-y: scroll;
 }
+.ant-table{
+    font-family: "roboto",sans-serif;
+}

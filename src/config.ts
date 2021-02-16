@@ -5,6 +5,14 @@ const error = (message1:string) => {
     message.error(message1, 4);
 };
 
+let usuario:String;
+
+export function setUsuario(email:String){
+    usuario=email;
+}
+export function getUsuario(){
+    return usuario;
+}
 export const TOKEN_KEY = '@teste-Token';
 export const isAuthenticated = async () => {
     let token = localStorage.getItem(TOKEN_KEY);
