@@ -93,7 +93,7 @@ export default function Carrinho (){
         })
     }
     function clearCart() {
-        api.delete(`http://localhost:8686/cart/clearCart/`+ getUsuario()).then(res =>{
+        api.delete(`http://localhost:8686/cart/clearCart/`+ getUsuario().id).then(res =>{
             setAtu(!Atu);
             success(res.data.message);
         }).catch(err => {
@@ -101,7 +101,7 @@ export default function Carrinho (){
         })
     }
     function finishCart() {
-        api.post(`http://localhost:8686/cart/finishCart/` + getUsuario()).then(res =>{
+        api.post(`http://localhost:8686/cart/finishCart/` + getUsuario().id).then(res =>{
             setAtu(!Atu);
             success(res.data);
         }).catch(err => {
@@ -155,7 +155,7 @@ export default function Carrinho (){
                         </Popconfirm>
                     </div>
                     <hr/>
-                    <Table route={"cart/"+getUsuario()} atu={Atu} size={10} columns={columns}/>
+                    <Table route={"cart/"+getUsuario().id} atu={Atu} size={10} columns={columns}/>
                 </Card>
             </div>
         </div>

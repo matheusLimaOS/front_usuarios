@@ -5,14 +5,20 @@ const error = (message1:string) => {
     message.error(message1, 4);
 };
 
-let usuario:String;
+interface user{
+    id:number,
+    name:string,
+    email:string,
+    role:number
+}
 
-export function setUsuario(email:String){
-    usuario=email;
-}
+let usuario:user;
+
 export function getUsuario(){
-    return usuario;
+    console.log(usuario);
+    return usuario === undefined ? {id:1,name:"matheus",email:"matheus",role:0} : usuario;
 }
+
 export const TOKEN_KEY = '@teste-Token';
 export const isAuthenticated = async () => {
     let token = localStorage.getItem(TOKEN_KEY);
@@ -38,7 +44,8 @@ export const isAuthenticated = async () => {
 
 }
 export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const login = async (token: string) => {
+export const login = async (token: string,user:user) => {
+    usuario = user;
     await localStorage.setItem(TOKEN_KEY, token);
     await localStorage.setItem('time',Date.now().toString());
 };
