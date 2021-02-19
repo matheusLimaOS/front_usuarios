@@ -30,6 +30,7 @@ function Venda() {
     const [Tamanho,setTamanho] = useState(0);
     const [Quantidade,setQuantidade] = useState(0);
     const [Size,setSize] = useState(5);
+    const [Atu,setAtu] = useState(true);
     const history = useHistory();
     const columns = [{
         title: 'ID',
@@ -69,7 +70,7 @@ function Venda() {
         values.quantidade = Quantidade;
 
         if(Venda){
-            api.post("http://localhost:8686/cart/addcart/"+getUsuario(),values).then(() =>{
+            api.post("http://localhost:8686/cart/addcart/"+getUsuario().id,values).then(() =>{
                 success("Produto colocado no carrinho!");
             }).catch(err => {
                 error(err.response.data.message);
@@ -78,6 +79,7 @@ function Venda() {
         else{
             api.post("http://localhost:8686/product/remove/",values).then(() =>{
                 success("Produto removido com sucesso!");
+                setAtu(!Atu);
             }).catch(err => {
                 error(err.response.data.message);
             })
@@ -225,7 +227,7 @@ function Venda() {
                             </Form.Item>
                         </Form>
                     </div>
-                    <Table route="product/" size={Size} columns={columns}/>
+                    <Table route="product/" atu={Atu} size={Size} columns={columns}/>
                 </Card>
             </div>
         </div>
