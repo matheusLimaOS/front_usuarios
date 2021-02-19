@@ -82,6 +82,7 @@ export default function Carrinho (){
         )
     }
     ]
+
     let [Atu,setAtu] = useState(true);
 
     function removeCart(id:number) {

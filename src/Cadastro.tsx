@@ -47,7 +47,7 @@ function TelaCadastro() {
                     onFinishFailed={onFinishFailed}
                 >
                     <Form.Item
-                        label="Name"
+                        label="Nome"
                         name="name"
                     >
                         <Input />

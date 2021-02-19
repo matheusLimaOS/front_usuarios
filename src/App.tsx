@@ -8,6 +8,8 @@ import Venda from "./Venda";
 import Carrinho from "./Carrinho";
 import HistoricoVendas from "./HistoricoVendas";
 import DetalheVenda from "./DetalheVenda";
+import ListaUsuarios from "./ListaUsuarios";
+import EditarPerfil from "./EditarPerfil";
 
 function App() {
   return (
@@ -33,6 +35,12 @@ function App() {
               </Route>
               <Route exact path="/HistVendas">
                   <HistoricoVendas/>
+              </Route>
+              <Route path="/Lista">
+                  <ListaUsuarios/>
+              </Route>
+              <Route path="/EditarPerfil">
+                  <EditarPerfil/>
               </Route>
               <Route path="/HistVendas/venda/:id">
                   <DetalheVenda/>
