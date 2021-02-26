@@ -6,7 +6,6 @@ import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
 import Table from "./Components/Table";
-import {Authenticate} from "./config";
 
 interface value{
     descricao:string,
@@ -68,6 +67,10 @@ function Inserir() {
                 success("Produto inserido com sucesso!");
                 history.push("/Home");
             }).catch(err => {
+                if(err.response.status === 401){
+                    history.push('/');
+                    error("Usuário desconectado, por favor fazer novamente o login");
+                }
                 error(err.response.data.message);
             })
         }
@@ -76,6 +79,10 @@ function Inserir() {
                 success("Produto editado com sucesso!");
                 history.push('/Home');
             }).catch(err => {
+                if(err.response.status === 401){
+                    history.push('/');
+                    error("Usuário desconectado, por favor fazer novamente o login");
+                }
                 error(err.response.data.message);
             })
         }
@@ -90,8 +97,6 @@ function Inserir() {
         setDesc(record.descricao);
         setTamanho(record.tamanho);
     }
-
-    Authenticate();
 
     return (
         <div className="telaHome">

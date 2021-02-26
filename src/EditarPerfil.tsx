@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Card, Form, Input, message, PageHeader} from "antd";
 import NavBar from "./Components/NavBar";
 import api from "./Axios";
-import {Authenticate, getUsuario, setUsuario, user} from "./config";
+import {getUsuario, setUsuario, user} from "./config";
 import {useHistory} from "react-router";
 import "./CSS/EditarPerfil.css"
 
@@ -24,18 +24,26 @@ function EditarPerfil(){
         values.role = parseInt(User.role);
         values.id = parseInt(User.id);
 
+        if(Email==='' || Email===undefined){
+            error("Email é obrigatório!")
+            return;
+        }
+
+
         api.put("http://localhost:8686/user/"+values.id,values).then(res =>{
             success("Usuário editado com sucesso!");
             setUsuario(values).then(r => {});
         }).catch(err => {
+            if(err.response.status === 401){
+                history.push('/');
+                error("Usuário desconectado, por favor fazer novamente o login");
+            }
             error(err.response.data.message);
         })
     };
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
-
-    Authenticate().then(r => {});
 
     return(
         <div className="telaHome">
@@ -71,7 +79,6 @@ function EditarPerfil(){
                         <Form.Item
                             label="Email"
                             name="email"
-                            rules={[{ required: true, message: 'Por Favor, insira seu e-mail!' }]}
                         >
                             <p hidden={true}>{Email}</p>
                             <Input

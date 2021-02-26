@@ -7,7 +7,7 @@ import NumberFormat from "react-number-format";
 import "./CSS/Carrinho.css";
 import api from "./Axios";
 import { Link } from "react-router-dom"
-import {Authenticate, getUsuario} from "./config";
+import {getUsuario} from "./config";
 
 const success = (message1:string) => {
     message.success(message1, 4);
@@ -90,6 +90,10 @@ export default function Carrinho (){
             success(res.data.message);
             setAtu(!Atu);
         }).catch(err =>{
+            if(err.response.status === 401){
+                history.push('/');
+                error("Usuário desconectado, por favor fazer novamente o login");
+            }
             error(err.response.data.message);
         })
     }
@@ -98,6 +102,10 @@ export default function Carrinho (){
             setAtu(!Atu);
             success(res.data.message);
         }).catch(err => {
+            if(err.response.status === 401){
+                history.push('/');
+                error("Usuário desconectado, por favor fazer novamente o login");
+            }
             error(err.response.data.message);
         })
     }
@@ -106,11 +114,13 @@ export default function Carrinho (){
             setAtu(!Atu);
             success(res.data);
         }).catch(err => {
+            if(err.response.status === 401){
+                history.push('/');
+                error("Usuário desconectado, por favor fazer novamente o login");
+            }
             error(err.response.data.message);
         })
     }
-
-    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">

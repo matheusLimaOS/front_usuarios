@@ -5,7 +5,7 @@ import api from "./Axios";
 import { useHistory } from 'react-router'
 import NavBar from "./Components/NavBar";
 import Table from "./Components/Table";
-import {Authenticate, AuthenticateRole, user} from "./config"
+import {AuthenticateRole, user} from "./config"
 
 const success = (message1:string) => {
     message.success(message1, 3);
@@ -73,7 +73,6 @@ function ListaUsuarios() {
     ]
     const [Atu,setAtu] = useState(false);
 
-    Authenticate().then(r => {});
     AuthenticateRole();
 
     function removeUser(User:user){

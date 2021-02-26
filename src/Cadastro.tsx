@@ -13,7 +13,6 @@ interface value{
 const success = (message1:string) => {
     message.success(message1, 3);
 };
-
 const error = (message1:string) => {
     message.error(message1, 3);
 };

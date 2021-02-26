@@ -5,7 +5,6 @@ import React, { useMemo } from "react";
 import {useHistory} from "react-router";
 import "./CSS/Carrinho.css";
 import { useLocation } from "react-router-dom";
-import {Authenticate} from "./config";
 
 export default function DetalheVenda (){
     const history = useHistory();
@@ -37,8 +36,6 @@ export default function DetalheVenda (){
     ]
     const location = useLocation();
     const stateFromProps = useMemo(() => location.state, [location]);
-
-    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">

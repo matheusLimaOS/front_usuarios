@@ -1,12 +1,12 @@
 import NavBar from "./Components/NavBar";
-import {Button, Card, PageHeader, Space} from "antd";
+import {Button, Card, message, PageHeader, Space} from "antd";
 import Table from "./Components/Table";
 import React from "react";
 import {useHistory} from "react-router";
 import "./CSS/Carrinho.css";
-import {Authenticate} from "./config";
 
 export default function HistoricoVendas (){
+
     const history = useHistory();
     const columns = [{
         title: 'ID Venda',
@@ -59,8 +59,6 @@ export default function HistoricoVendas (){
             return hora;
         }
     }
-
-    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">

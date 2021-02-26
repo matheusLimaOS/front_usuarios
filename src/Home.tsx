@@ -3,11 +3,8 @@ import "./CSS/Home.css";
 import {Button, Card, PageHeader} from "antd";
 import NavBar from "./Components/NavBar";
 import { Link } from 'react-router-dom';
-import {Authenticate} from "./config";
 
 function Home() {
-    Authenticate();
-
     return (
         <div className="telaHome">
             <NavBar/>

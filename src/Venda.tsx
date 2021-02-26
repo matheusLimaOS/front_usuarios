@@ -6,7 +6,7 @@ import NavBar from "./Components/NavBar";
 import { useHistory } from 'react-router'
 import api from "./Axios";
 import Table from "./Components/Table";
-import {Authenticate, getUsuario} from "./config";
+import { getUsuario} from "./config";
 
 interface value{
     descricao:string,
@@ -73,6 +73,10 @@ function Venda() {
             api.post("http://localhost:8686/cart/addcart/"+getUsuario().id,values).then(() =>{
                 success("Produto colocado no carrinho!");
             }).catch(err => {
+                if(err.response.status === 401){
+                    history.push('/');
+                    error("Usuário desconectado, por favor fazer novamente o login");
+                }
                 error(err.response.data.message);
             })
         }
@@ -81,6 +85,10 @@ function Venda() {
                 success("Produto removido com sucesso!");
                 setAtu(!Atu);
             }).catch(err => {
+                if(err.response.status === 401){
+                    history.push('/');
+                    error("Usuário desconectado, por favor fazer novamente o login");
+                }
                 error(err.response.data.message);
             })
         }
@@ -106,8 +114,6 @@ function Venda() {
         setTamanho(record.tamanho);
         setVenda(false);
     }
-
-    Authenticate().then(r => {});
 
     return (
         <div className="telaHome">
